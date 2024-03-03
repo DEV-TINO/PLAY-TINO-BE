@@ -1,0 +1,9 @@
+[submodule "PLAY-TINO-Timer-TG"]
+  path = PLAY-TINO-Timer-TG
+  url = git@github.com:DEV-TINO/PLAY-TINO-Timer-TG.git
+[submodule "PLAY-TINO-Favorite-YR"]
+	path = PLAY-TINO-Favorite-YR
+	url = git@github.com:DEV-TINO/PLAY-TINO-Favorite-YR.git
+[submodule "PLAY-TINO-Quiz-SH"]
+	path = PLAY-TINO-Quiz-SH
+	url = git@github.com:DEV-TINO/PLAY-TINO-Quiz-SH.git
