@@ -50,7 +50,8 @@ public class TimerRankService {
 
         // DAO 값 초기화
         timer.setStopTime(requestTimerSaveDTO.getStopTime());
-        timer.setUploadTime(LocalDateTime.now());
+        //timer.setUploadTime(LocalDateTime.now());
+        timer.setUploadTime(LocalDateTime.now().plusHours(9));
         timer.setErrorRange(saveTimerErrorRangeBean.exec(requestTimerSaveDTO));
 
         // 에러 처리

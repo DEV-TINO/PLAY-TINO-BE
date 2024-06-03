@@ -74,7 +74,8 @@ public class QuizService {
         String stringQuizList = quizConvertListToString.exec(QuizList);
 
         quizGame.setQuizList(stringQuizList);
-        quizGame.setCreateAt(LocalDateTime.now());
+        //quizGame.setCreateAt(LocalDateTime.now());
+        quizGame.setCreateAt(LocalDateTime.now().plusHours(9));
 
         saveQuizGameDAOBean.exec(quizGame);
 
@@ -126,7 +127,8 @@ public class QuizService {
 
         quizRank.setGameId(requestQuizRankDTO.getGameId());
         quizRank.setUserId(requestQuizRankDTO.getUserId());
-        quizRank.setUpdateAt(LocalDateTime.now());
+        //quizRank.setUpdateAt(LocalDateTime.now());
+        quizRank.setUpdateAt(LocalDateTime.now().plusHours(9));
         quizRank.setNonsenseCorrect(requestQuizRankDTO.getNonsenseCorrect());
         quizRank.setCommonsenseCorrect(requestQuizRankDTO.getCommonsenseCorrect());
 

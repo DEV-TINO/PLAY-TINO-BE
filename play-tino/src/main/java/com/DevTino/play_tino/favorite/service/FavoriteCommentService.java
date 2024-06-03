@@ -92,7 +92,8 @@ public class FavoriteCommentService {
 
         favoriteComment.setCommentId(UUID.randomUUID());
         favoriteComment.setHeartCount(0);
-        favoriteComment.setUploadTime(LocalDateTime.now());
+        //favoriteComment.setUploadTime(LocalDateTime.now());
+        favoriteComment.setUploadTime(LocalDateTime.now().plusHours(9));
 
         //DAO에 DTO의 값(userId, Content) 넣어주기
         favoriteComment.setUserId(requestFavoriteCommentSaveDTO.getUserId());

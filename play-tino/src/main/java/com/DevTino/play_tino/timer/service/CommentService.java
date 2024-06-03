@@ -46,7 +46,8 @@ public class CommentService {
 
         timerComment.setCommentId(UUID.randomUUID());
         timerComment.setHeartCount(0);
-        timerComment.setUploadTime(LocalDateTime.now());
+        //timerComment.setUploadTime(LocalDateTime.now());
+        timerComment.setUploadTime(LocalDateTime.now().plusHours(9));
 
         // DAO 값 초기화
         timerComment.setUserId(requestTimerCommentSaveDTO.getUserId());
