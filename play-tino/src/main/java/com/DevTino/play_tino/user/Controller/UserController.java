@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RestController;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "https://play-tino.com") // 배포
-//@CrossOrigin("*") // 로컬
+//@CrossOrigin(origins = "https://play-tino.com") // 배포
+@CrossOrigin("*") // 로컬
 public class UserController {
 
     UserService userService;

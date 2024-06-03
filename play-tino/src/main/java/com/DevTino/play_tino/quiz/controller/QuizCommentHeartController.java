@@ -13,8 +13,8 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@CrossOrigin(origins = "https://play-tino.com") // 배포
-//@CrossOrigin("*") // 로컬
+//@CrossOrigin(origins = "https://play-tino.com") // 배포
+@CrossOrigin("*") // 로컬
 @RequestMapping("/quiz")
 public class QuizCommentHeartController {
 
