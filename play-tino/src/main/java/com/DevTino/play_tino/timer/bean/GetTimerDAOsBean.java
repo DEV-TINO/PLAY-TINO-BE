@@ -37,7 +37,7 @@ public class GetTimerDAOsBean {
         }
 
         // page형의 timerPage 가져오기
-        List<Timer> timerList = jpaTimerRepository.findByGameIdInOrderByErrorRangeAsc(timerIds);
+        List<Timer> timerList = jpaTimerRepository.findByGameIdInOrderByErrorRangeAscUploadTimeAsc(timerIds);
         if (timerList.size() < 100){
             return timerList;
         }

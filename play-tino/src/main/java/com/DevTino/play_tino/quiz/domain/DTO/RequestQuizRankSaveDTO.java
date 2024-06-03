@@ -10,5 +10,4 @@ public class RequestQuizRankSaveDTO {
     UUID userId;
     Integer nonsenseCorrect;
     Integer commonsenseCorrect;
-    boolean top100Ranking;
 }

@@ -7,11 +7,11 @@ import com.DevTino.play_tino.timer.service.TimerRankService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@CrossOrigin(origins = "https://play-tino.com")
+@CrossOrigin(origins = "https://play-tino.com") // 배포
+//@CrossOrigin("*") // 로컬
 @RequestMapping("/timer")
 public class TimerRankController {
 
@@ -25,8 +25,7 @@ public class TimerRankController {
     // 랭킹 전체 조회 o
     @GetMapping("/rank/all")
     public ResponseTimerRanksDTO readAll(@RequestParam (required = false) Integer page){
-        Pageable pageable = PageRequest.of(page, 5,
-                Sort.by(Sort.Direction.ASC, "errorRange").and(Sort.by(Sort.Direction.ASC, "uploadTime"))
+        Pageable pageable = PageRequest.of(page, 5
         );
         return timerRankService.readAll(pageable);
     }
