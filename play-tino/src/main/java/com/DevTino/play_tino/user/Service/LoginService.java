@@ -6,6 +6,7 @@ import com.DevTino.play_tino.user.Bean.small.SaveUserDAOBean;
 import com.DevTino.play_tino.user.Domain.DAO.UserDAO;
 import com.fasterxml.jackson.databind.JsonNode;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.env.Environment;
 import org.springframework.http.*;
 import org.springframework.stereotype.Service;
@@ -22,6 +23,21 @@ public class LoginService {
     private final Environment environment;
     GetUserDAOBean getUserDAOBean;
     SaveUserDAOBean saveUserDAOBean;
+
+    @Value("${GOOGLE_CLIENT_ID}")
+    String google_clientId;
+
+    @Value("${GOOGLE_CLIENT_SECRET}")
+    String google_clientSecret;
+
+    @Value("${GOOGLE_REDIRECT_URI}")
+    String google_redirectUri;
+
+    @Value("${GOOGLE_TOKEN_URI}")
+    String google_tokenUri;
+
+    @Value("${GOOGLE_RESOURCE_URI}")
+    String google_resourceUri;
 
     @Autowired
     public LoginService(Environment environment, GetUserDAOBean getUserDAOBean, SaveUserDAOBean saveUserDAOBean){
@@ -79,18 +95,20 @@ public class LoginService {
     private String getAccessToken(String authorizationCode){
 
         // 설정해둔 Property들 가져와
-        String clientId = environment.getProperty("google.client.id");
+        /*String clientId = environment.getProperty("google.client.id");
         String clientSecret = environment.getProperty("google.client.secret");
         String redirectUri = environment.getProperty("google.auth.redirect-uri");
-        String tokenUri = environment.getProperty("google.auth.token-uri");
+        String tokenUri = environment.getProperty("google.auth.token-uri");*/
 
         // params라는 이름의 Map 생성해서 요청에 쓸 정보들 매핑해서 넣어
         MultiValueMap<String, String> params = new LinkedMultiValueMap<>();
         params.add("code", authorizationCode);
-        params.add("client_id", clientId);
-        params.add("client_secret", clientSecret);
-        params.add("redirect_uri", redirectUri);
+        params.add("client_id", google_clientId);
+        params.add("client_secret", google_clientSecret);
+        params.add("redirect_uri", google_redirectUri);
         params.add("grant_type", "authorization_code");
+
+        System.out.println("redirectUri = " + google_redirectUri);
 
         // 요청에 쓸 헤더 설정
         HttpHeaders headers =  new HttpHeaders();
@@ -100,14 +118,12 @@ public class LoginService {
         HttpEntity entity = new HttpEntity(params, headers);
 
         // restTemplate으로 요청 보냄 : 응답은 JsonNode로 구체화된 ResponseEntity!
-        assert tokenUri != null;
-        ResponseEntity<JsonNode> responseNode = restTemplate.exchange(tokenUri, HttpMethod.POST, entity, JsonNode.class);
+        ResponseEntity<JsonNode> responseNode = restTemplate.exchange(google_tokenUri, HttpMethod.POST, entity, JsonNode.class);
 
         // 응답 노드의 바디에 accessToken 담겨 있으니 바디를 따로 노드로 저장
         JsonNode accessTokenNode = responseNode.getBody();
 
         // access_token get해서 String으로 변환, 리턴
-        assert accessTokenNode != null;
         return accessTokenNode.get("access_token").asText();
     }
 
@@ -115,7 +131,7 @@ public class LoginService {
     private JsonNode getUserResource(String accessToken) {
 
         // 요청 보낼 리소스 서버 URI 가져옴
-        String resourceUri = environment.getProperty("google.resource-uri");
+        // String resourceUri = environment.getProperty("google.resource-uri");
 
         // 요청으로 보낼 헤더 설정 : accessToken 앞에 "Bearer"를 붙인 걸 Authorization 으로 설정
         HttpHeaders headers = new HttpHeaders();
@@ -125,7 +141,6 @@ public class LoginService {
         HttpEntity entity = new HttpEntity(headers);
 
         // resourceUri로 요청 AccessToken 포함한 요청 보내, 응답으로 받은 유저 정보 getBody 해서 리턴
-        assert resourceUri != null;
-        return restTemplate.exchange(resourceUri, HttpMethod.GET, entity, JsonNode.class).getBody();
+        return restTemplate.exchange(google_resourceUri, HttpMethod.GET, entity, JsonNode.class).getBody();
     }
 }
