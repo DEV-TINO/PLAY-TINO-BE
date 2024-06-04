@@ -51,8 +51,10 @@ public class TimerService {
             timer.setUserId(userId);
             timer.setStopTime("0000");
             timer.setErrorRange("9999");
-            timer.setCreateTime(LocalDateTime.now());
-            timer.setUploadTime(LocalDateTime.now());
+            //timer.setCreateTime(LocalDateTime.now());
+            //timer.setUploadTime(LocalDateTime.now());
+            timer.setCreateTime(LocalDateTime.now().plusHours(9));
+            timer.setUploadTime(LocalDateTime.now().plusHours(9));
 
             String targetTime = saveTargetTimerBean.exec();
             timer.setTargetTime(targetTime);

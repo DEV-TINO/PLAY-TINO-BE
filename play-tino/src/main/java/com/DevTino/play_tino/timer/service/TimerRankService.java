@@ -50,7 +50,8 @@ public class TimerRankService {
 
         // DAO 값 초기화
         timer.setStopTime(requestTimerSaveDTO.getStopTime());
-        timer.setUploadTime(LocalDateTime.now());
+        //timer.setUploadTime(LocalDateTime.now());
+        timer.setUploadTime(LocalDateTime.now().plusHours(9));
         timer.setErrorRange(saveTimerErrorRangeBean.exec(requestTimerSaveDTO));
 
         // 에러 처리
@@ -58,7 +59,7 @@ public class TimerRankService {
             return null;
 
         // timer에 에러 범위 내림차순으로 100개의 DAO 가져옴
-        List<Timer> timerList = jpaTimerRepository.findToo100ByOrderByErrorRangeDesc();
+        List<Timer> timerList = jpaTimerRepository.findTop100ByOrderByErrorRangeAsc();
 
         // TimerRank 새로 생성 해줌
         TimerRank timerRank = new TimerRank();
@@ -75,7 +76,10 @@ public class TimerRankService {
             responseSaveTimerRankDTO = saveTimerRankDAOBean.exec(timerRank);
         }
         else {
-            if (Double.parseDouble(saveTimerErrorRangeBean.exec(requestTimerSaveDTO)) < Double.parseDouble(timerList.get(99).getErrorRange())){
+            double newErrorRange = Double.parseDouble(saveTimerErrorRangeBean.exec(requestTimerSaveDTO));
+            double oldErrorRange = Double.parseDouble(timerList.get(99).getErrorRange());
+
+            if (newErrorRange < oldErrorRange){
                 jpaTimerRepository.save(timer);
                 responseSaveTimerRankDTO = saveTimerRankDAOBean.exec(timerRank);
             } else {

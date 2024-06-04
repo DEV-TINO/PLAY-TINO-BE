@@ -138,7 +138,8 @@ public class QuizCommentService {
         quizComment.setUserId(requestQuizCommentSaveDTO.getUserId());
         quizComment.setContent(requestQuizCommentSaveDTO.getContent());
         quizComment.setHeartCount(0);
-        quizComment.setUploadTime(LocalDateTime.now());
+        //quizComment.setUploadTime(LocalDateTime.now());
+        quizComment.setUploadTime(LocalDateTime.now().plusHours(9));
 
         // DAO를 저장 -> comment createComment
         saveQuizCommentDAOBean.exec(quizComment);
