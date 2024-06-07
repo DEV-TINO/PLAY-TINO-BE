@@ -15,6 +15,6 @@ public interface JpaQuizRankRepository extends JpaRepository<QuizRank, UUID> {
 
     Page<QuizRank> findTop100ByOrderByAllCorrectDescUpdateAt(Pageable pageable);
 
-    List<QuizRank> findTop100ByOrderByAllCorrectDesc();
+    List<QuizRank> findTop100ByOrderByAllCorrectDescUpdateAtDesc();
 
 }

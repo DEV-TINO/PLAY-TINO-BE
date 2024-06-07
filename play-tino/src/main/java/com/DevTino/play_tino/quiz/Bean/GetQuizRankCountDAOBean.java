@@ -14,6 +14,6 @@ public class GetQuizRankCountDAOBean {
     }
 
     public Integer exec() {
-        return jpaQuizRankRepository.findTop100ByOrderByAllCorrectDesc().size();
+        return jpaQuizRankRepository.findTop100ByOrderByAllCorrectDescUpdateAtDesc().size();
     }
 }
