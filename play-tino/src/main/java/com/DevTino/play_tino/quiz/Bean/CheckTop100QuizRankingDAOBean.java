@@ -17,6 +17,6 @@ public class CheckTop100QuizRankingDAOBean {
     }
 
     public List<QuizRank> exec() {
-        return jpaQuizRankRepository.findTop100ByOrderByAllCorrectDesc();
+        return jpaQuizRankRepository.findTop100ByOrderByAllCorrectDescUpdateAtDesc();
     }
 }
