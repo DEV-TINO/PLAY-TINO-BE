@@ -42,4 +42,14 @@ public class GetFavoriteCommentDAOsBean {
 
         return jpaFavoriteCommentRepository.findAll(pageable);
     }
+
+    //하트 개수로 내림차순하고 페이징 처리
+    public Page<FavoriteComment> execByHeartCount(Pageable pageable) {
+        return jpaFavoriteCommentRepository.findAllByOrderByHeartCountDescUploadTimeDesc(pageable);
+    }
+
+    //업로드 시간으로 내림차순하고 페이징 처리
+    public Page<FavoriteComment> execByUploadTime(Pageable pageable) {
+        return jpaFavoriteCommentRepository.findAllByOrderByUploadTimeDesc(pageable);
+    }
 }

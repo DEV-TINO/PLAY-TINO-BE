@@ -20,4 +20,10 @@ public interface JpaFavoriteCommentRepository extends JpaRepository<FavoriteComm
 
     // 페이징해서 comment 찾기
     Page<FavoriteComment> findAll(Pageable pageable);
+
+    // heartCount 기준 페이징
+    Page<FavoriteComment> findAllByOrderByHeartCountDescUploadTimeDesc(Pageable pageable);
+
+    // uploadTime 기준 페이징
+    Page<FavoriteComment> findAllByOrderByUploadTimeDesc(Pageable pageable);
 }

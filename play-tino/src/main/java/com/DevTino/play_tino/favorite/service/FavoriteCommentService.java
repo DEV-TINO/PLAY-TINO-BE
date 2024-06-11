@@ -20,6 +20,8 @@ import java.util.UUID;
 @Service
 public class FavoriteCommentService {
 
+    private static final int PAGE_SIZE = 10;
+
     SaveFavoriteCommentDAOBean saveFavoriteCommentDAOBean;
     UpdateFavoriteCommentDAOBean updateFavoriteCommentDAOBean;
     DeleteFavoriteCommentDAOBean deleteFavoriteCommentDAOBean;
@@ -43,16 +45,21 @@ public class FavoriteCommentService {
     // 댓글 조회 (페이징)
     public ResponseFavoriteCommentsDTO readCommentAll(UUID userId, int pageNo, String criteria){
 
-        // "heart" 또는 "time"으로 받은 criteria -> 정렬 기준 설정
-        String criteriaName;
-        if (criteria.equals("heart")) { criteriaName = "heartCount"; }
-        else if (criteria.equals("time")) { criteriaName = "uploadTime"; }
+        Page<FavoriteComment> page;
+
+
+
+        // "heart"인 경우 heartCount 기준으로 정렬 페이징
+        if (criteria.equals("heart")) {
+            Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
+            page = getFavoriteCommentDAOsBean.execByHeartCount(pageable);
+        }
+        // "time"인 경우 uploadTime 기준으로 정렬 페이징
+        else if (criteria.equals("time")) {
+            Pageable pageable = PageRequest.of(pageNo, PAGE_SIZE);
+            page = getFavoriteCommentDAOsBean.execByUploadTime(pageable);
+        }
         else return null;
-
-
-        // pageNo(페이지넘버)와 criteriaName(기준)으로 페이징
-        Pageable pageable = PageRequest.of(pageNo, 10, Sort.by(Sort.Direction.DESC, criteriaName));
-        Page<FavoriteComment> page = getFavoriteCommentDAOsBean.exec(pageable);
 
         // 유저아이디에 따른 DTOList 생성(해당 사용자가 하트를 눌렀는지도 같이 반환해줄 것)
         List<ResponseFavoriteCommentByUserDTO> responseFavoriteCommentByUserDTOList = new ArrayList<>();
