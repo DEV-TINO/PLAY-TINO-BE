@@ -9,6 +9,8 @@ import java.util.Random;
 @Component
 public class SaveTargetTimerBean {
 
+    public static final int MAX_STRING_LENGTH = 2;
+
     JpaTimerRepository jpaTimerRepository;
 
     @Autowired
@@ -20,13 +22,12 @@ public class SaveTargetTimerBean {
 
         Random random = new Random();
 
-        String targetTime = String.valueOf(random.nextInt(11)+5);
+        String targetTime = String.valueOf(random.nextInt(51)+50); // 50 ~ 100
 
-        // 한자리수일떄 앞에 0을 붙여야겠지?
-        if (targetTime.length() < 2)
-            targetTime = "0" + targetTime + ".00";
-        else targetTime = targetTime + ".00";
-
-        return targetTime;
+        if (targetTime.length() > MAX_STRING_LENGTH) {
+            return Integer.valueOf(targetTime)/10 + ".00";
+        } else {
+            return "0" + Integer.toString(Integer.valueOf(targetTime)/10) + "." + Integer.toString(Integer.valueOf(targetTime) % 10) + "0";
+        }
     }
 }

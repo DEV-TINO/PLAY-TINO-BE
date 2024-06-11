@@ -12,9 +12,11 @@ import java.util.UUID;
 @Repository
 public interface JpaTimerCommentRepository extends JpaRepository<TimerComment, UUID> {
     // 업로드 시간 기준 내림차순으로 정률 후 comment 찾기
-    List<TimerComment> findAllByOrderByUploadTimeDesc();
+    Page<TimerComment> findAllByOrderByUploadTimeDesc(Pageable pageable);
+
     // 하트수 내림차순으로 정렬 후 comment 찾기
-    List<TimerComment> findAllByOrderByHeartCountDescUploadTimeDesc();
+    Page<TimerComment> findAllByOrderByHeartCountDescUploadTimeDesc(Pageable pageable);
+
     // page형으로 가져오기
     Page<TimerComment> findAll(Pageable pageable);
 }

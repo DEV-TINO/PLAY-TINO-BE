@@ -81,8 +81,7 @@ public class CommentService {
     // 전체 조회
     public ResponseTimerCommentsDTO readAll(String type, UUID userId, Pageable pageable) {
 
-        Page<TimerComment> commentPage = getTimerCommentDAOsBean.exec(pageable);
-
+        Page<TimerComment> commentPage = getTimerCommentDAOsBean.exec(pageable, type);
         // DTO 생성
         List<ResponseTimerCommentHeartCheckDTO> responseCommentCheckDTOList = new ArrayList<>();
 

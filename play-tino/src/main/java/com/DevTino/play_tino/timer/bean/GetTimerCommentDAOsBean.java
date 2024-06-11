@@ -19,17 +19,11 @@ public class GetTimerCommentDAOsBean {
         this.jpaTimerCommentRepository = jpaTimerCommentRepository;
     }
 
-    public Page<TimerComment> exec(Pageable pageable){
-        return jpaTimerCommentRepository.findAll(pageable);
-    }
-
-    //모든 댓글 업로드 시간 기준으로 정렬해 리스트 반환
-    public List<TimerComment> exec(String type){
+    public Page<TimerComment> exec(Pageable pageable, String type){
         if (type.equals("heartCount"))
-            return jpaTimerCommentRepository.findAllByOrderByHeartCountDescUploadTimeDesc();
+            return jpaTimerCommentRepository.findAllByOrderByHeartCountDescUploadTimeDesc(pageable);
         else if (type.equals("uploadTime")) {
-            return jpaTimerCommentRepository.findAllByOrderByUploadTimeDesc();
-        }
+            return jpaTimerCommentRepository.findAllByOrderByUploadTimeDesc(pageable);        }
         else {
             return null;
         }
