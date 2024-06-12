@@ -13,7 +13,7 @@ public interface JpaTimerRepository extends JpaRepository<Timer, UUID> {
     // gameId와 userId를 이용해 Timer 찾기
     Timer findByGameIdAndUserId(UUID gameId, UUID userId);
 
-    List<Timer> findByGameIdInOrderByErrorRangeAscUploadTimeAsc(List<UUID> timerIds);
+    List<Timer> findByGameIdInOrderByErrorRangeAscUploadTimeDesc(List<UUID> timerIds);
 
     List<Timer> findTop100ByOrderByErrorRangeAsc();
 }
